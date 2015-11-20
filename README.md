@@ -1,0 +1,2 @@
+# STICK
+Android game project
