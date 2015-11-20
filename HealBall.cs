@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class HealBall : MonoBehaviour {
-
+    private PlayerScript pS;
     private int healPoints = 10;
 	// Use this for initialization
 	void Start () {
@@ -18,12 +18,16 @@ public class HealBall : MonoBehaviour {
     {
         if (coll.gameObject.tag.Equals("Player"))
         {
-            PlayerScript pS = (PlayerScript)coll.gameObject.GetComponent(typeof(PlayerScript));
-            if (!pS.hasMaxHealth())
+            pS = (PlayerScript)coll.gameObject.GetComponent(typeof(PlayerScript));
+            pS.damage(healPoints);
+            //if (!pS.hasMaxHealth())
+            //temp for testing
+            if(false)
             {
                 pS.heal(healPoints);
                 Destroy(gameObject);
             }
+            Destroy(gameObject);
         }
     }
 }

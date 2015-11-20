@@ -5,6 +5,7 @@ public class PlayerController : MonoBehaviour {
     //set of gameObjects that are player
     private GameObject player;
     private GameObject background;
+    private GameObject corpse;
     PlayerScript p;
     private bool lockedOnPlayer = false;
     private bool hasNormalColor = true;
@@ -43,7 +44,7 @@ public class PlayerController : MonoBehaviour {
         }
         
     }
-
+    //flip color of the whole thing
     private void flipColor()
     {
         if (hasNormalColor)

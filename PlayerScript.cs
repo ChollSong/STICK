@@ -12,6 +12,7 @@ public class PlayerScript : MonoBehaviour
     int jumpForce = 600;
     int health = 100;
     float groundRadius = 0.5f;
+    int gravityVal = 3;
     Rigidbody2D body;
     Animator anime;
     SpriteRenderer sprite;
@@ -23,22 +24,22 @@ public class PlayerScript : MonoBehaviour
     int rotationState = (int)Orientation.NORMALSIDE;
 
     // Use this for initialization
-    void Start() {
+    public void Start() {
         body = GetComponent<Rigidbody2D>();
         anime = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
-        body.gravityScale = 3;
+        body.gravityScale = gravityVal;
     }
 
     // Update is called once per frame
-    void Update() {
+   public void Update() {
         move();
         setAnimate();
         checkDeath();
         
     }
 
-    protected void move() {
+    private void move() {
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
         //check whether going left or right
         if (goingRight) {
@@ -66,16 +67,19 @@ public class PlayerScript : MonoBehaviour
 
     }
 
-    protected void setAnimate() {
+    private void setAnimate() {
         //don't forget to multiply by upsidedown enum when need to 
         anime.SetFloat("vSpeed", body.velocity.y * rotationState);
         anime.SetBool("runState", (goingRight || goingLeft) && grounded);
         anime.SetBool("grounded", grounded);
     }
-    protected void checkDeath()
-    {//checks if the death condition has been reached
+    //checks if the death condition has been reached
+    private void checkDeath()
+    {
         if (health <= 0)
         {
+            GameObject g = (GameObject)Instantiate(Resources.Load("Pre-fab/Corpse"), transform.position, transform.rotation);
+            g.GetComponent<ParticleSystem>().startColor = sprite.color;
             Destroy(gameObject);
         }
     }
@@ -129,16 +133,16 @@ public class PlayerScript : MonoBehaviour
         goingLeft = true;
         facingRight = false;
     }
-
+    //stop left and right movement
     public void stop()
     {
         goingRight = false;
         goingLeft = false;
     }
-
+    //spawning bullets
     public void shoot() {
-        Instantiate(Resources.Load("Pre-fab/flash"),gun.position,gameObject.transform.rotation);
-        Instantiate(Resources.Load("Pre-fab/bullet"), gun.position, gameObject.transform.rotation);
+        Instantiate(Resources.Load("Pre-fab/flash"),gun.position,transform.rotation);
+        Instantiate(Resources.Load("Pre-fab/bullet"), gun.position, transform.rotation);
     }
     //need to find someway to implement the flip() function for later;
     public void flip() {
@@ -152,11 +156,11 @@ public class PlayerScript : MonoBehaviour
                 transform.eulerAngles = new Vector3(0, 0, 180f);
             }
             
-            body.gravityScale = -3;
+            body.gravityScale = -1*gravityVal;
         }
         else
         {
-            body.gravityScale = 3;
+            body.gravityScale = gravityVal;
             rotationState = (int)Orientation.NORMALSIDE;
             if (facingRight)
             {

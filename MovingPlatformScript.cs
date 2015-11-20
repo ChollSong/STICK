@@ -23,7 +23,8 @@ public class MovingPlatformScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate() {
-        rigidBody.MovePosition(origin + new Vector3(amplitudeX*Mathf.Cos(wX*Time.time+(thetha/ 180)* Mathf.PI), amplitudeY * Mathf.Sin(wY * Time.time + (phi / 180) * Mathf.PI), 0));
+        rigidBody.MovePosition(origin + new Vector3(amplitudeX*Mathf.Cos(wX*Time.time+(thetha/ 180)* Mathf.PI),
+            amplitudeY * Mathf.Sin(wY * Time.time + (phi / 180) * Mathf.PI), 0));
 	}
     
 }

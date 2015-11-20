@@ -1,23 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class FlashScript : MonoBehaviour {
-    private float timer;
-    
-    // Use this for initialization
+public class FlashScript : TransientOBJ {
+   
     void Start()
     {
-        timer = 0;
+        setMaxTime(0.04f);
     }
-
     // Update is called once per frame
-    void Update()
+    new void Update()
     {
+        base.Update();
         transform.Translate(Vector2.right * 10 * Time.deltaTime);
-        timer += Time.deltaTime;
-        if (timer > 0.04)
-        {
-            Destroy(gameObject);
-        }
+        
     }
 }

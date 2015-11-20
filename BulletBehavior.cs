@@ -1,26 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class BulletBehavior : MonoBehaviour {
+public class BulletBehavior : TransientOBJ {
 
-    private float lifetime;
     private int damagePerBullet = 10;
     // Use this for initialization
     void Start()
     {
-        lifetime = 0;
+        setMaxTime(3);
     }
 
     // Update is called once per frame
-    void Update()
-    {   
+    new void Update()
+    {
+        base.Update();
         move();
-        if (lifetime > 3)
-        {
-            Destroy(gameObject);
-        }
-
-        lifetime += Time.deltaTime;
     }
 
     void move()
