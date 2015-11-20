@@ -5,8 +5,8 @@ public class PlayerController : MonoBehaviour {
     //set of gameObjects that are player
     private GameObject player;
     private GameObject background;
-    private GameObject corpse;
     PlayerScript p;
+    //lockedOnPlayer means that there is a 'puppet' being controled by this class
     private bool lockedOnPlayer = false;
     private bool hasNormalColor = true;
     
@@ -25,8 +25,14 @@ public class PlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         if (player == null) {
-            lockedOnPlayer =false;
-            
+            //must be in this order so that it will always be normal.
+            //will need to modify this code later
+            lockedOnPlayer = false;
+            if (!hasNormalColor)
+            {
+                flipColor();
+            }
+           
         }
         else if(player!=null)
         {
@@ -44,12 +50,17 @@ public class PlayerController : MonoBehaviour {
         }
         
     }
-    //flip color of the whole thing
+
+
+    //flip color of the whole thing can also detect whether player still active
     private void flipColor()
     {
         if (hasNormalColor)
         {
-            player.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 255);
+            if (lockedOnPlayer)
+            {
+                player.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 255);
+            }
             foreach(GameObject g in GameObject.FindGameObjectsWithTag("platform")){
                 g.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 255);
             }
@@ -58,7 +69,10 @@ public class PlayerController : MonoBehaviour {
         }
         else
         {
-            player.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 255);
+            if (lockedOnPlayer)
+            {
+                player.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 255);
+            }
             foreach (GameObject g in GameObject.FindGameObjectsWithTag("platform"))
             {
                 g.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 255);
