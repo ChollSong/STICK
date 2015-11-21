@@ -4,6 +4,7 @@ using System.Collections;
 public class BulletBehavior : TransientOBJ {
 
     private int damagePerBullet = 10;
+    private int bulletSpeed = 25;
     // Use this for initialization
     void Start()
     {
@@ -19,7 +20,7 @@ public class BulletBehavior : TransientOBJ {
 
     void move()
     {
-        transform.Translate(Vector2.right * 20 * Time.deltaTime);
+        transform.Translate(Vector2.right * bulletSpeed * Time.deltaTime);
     }
 
     void OnCollisionEnter2D(Collision2D coll)

@@ -27,6 +27,7 @@ public class HealBall : MonoBehaviour {
                 pS.heal(healPoints);
                 Destroy(gameObject);
             }
+            //need to del this part once bug test is over
             Destroy(gameObject);
         }
     }

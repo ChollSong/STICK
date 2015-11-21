@@ -8,8 +8,8 @@ public class HumanoidScript : MonoBehaviour
     public LayerMask whatIsGround;
     public Transform gun;
 
-    int speed = 7;
-    int jumpForce = 600;
+    int speed = 8;
+    int jumpForce = 700;
     private int health=1;
     float groundRadius = 0.5f;
     int gravityVal = 3;
@@ -38,6 +38,7 @@ public class HumanoidScript : MonoBehaviour
         checkDeath();
         
     }
+    
     // do movements according to logic
     private void move() {
         grounded = Physics2D.OverlapCircle(groundCheck.position, groundRadius, whatIsGround);
@@ -181,6 +182,11 @@ public class HumanoidScript : MonoBehaviour
             }
            
         }
+    }
+    //send spritecomponent of the player
+    public SpriteRenderer getSprite()
+    {
+        return sprite;
     }
 
    

@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour {
     //lockedOnPlayer means that there is a 'puppet' being controled by this class
     private bool lockedOnPlayer = false;
     private bool hasNormalColor = true;
+    private float cooldownTimer;
+    private bool cd=false;
+    private float maxCooldownTime = 3;
     
 
     // Use this for initialization
@@ -30,7 +33,18 @@ public class PlayerController : MonoBehaviour {
             lockedOnPlayer = false;
             if (!hasNormalColor)
             {
+                cd = true;
+               //will use flipcolor() later
+            }
+            if (cd)
+            {
+                cooldownTimer += Time.deltaTime;
+            }
+            if (cooldownTimer > maxCooldownTime)
+            {
                 flipColor();
+                cooldownTimer = 0;
+                cd = false;
             }
            
         }
@@ -53,14 +67,16 @@ public class PlayerController : MonoBehaviour {
 
 
     //flip color of the whole thing can also detect whether player still active
-    private void flipColor()
-    {
+    private void flipColor() { 
+
+         if (lockedOnPlayer)
+            {
+                p.flipPlayerColor();
+            }
+    
         if (hasNormalColor)
         {
-            if (lockedOnPlayer)
-            {
-                player.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 255);
-            }
+           
             foreach(GameObject g in GameObject.FindGameObjectsWithTag("platform")){
                 g.GetComponent<SpriteRenderer>().color = new Color(255, 255, 255, 255);
             }
@@ -69,10 +85,7 @@ public class PlayerController : MonoBehaviour {
         }
         else
         {
-            if (lockedOnPlayer)
-            {
-                player.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 255);
-            }
+       
             foreach (GameObject g in GameObject.FindGameObjectsWithTag("platform"))
             {
                 g.GetComponent<SpriteRenderer>().color = new Color(0, 0, 0, 255);
@@ -90,8 +103,6 @@ public class PlayerController : MonoBehaviour {
             p.flip();
         }
     }
-
-
 
     public void goLeft() {
         if (lockedOnPlayer) {
