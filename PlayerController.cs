@@ -2,15 +2,20 @@
 using System.Collections;
 
 public class PlayerController : MonoBehaviour {
+    
     //set of gameObjects that are player
     private GameObject player;
     private GameObject background;
     PlayerScript p;
+
+    //starting point for respawning.
+    private GameObject start;
+    private StartpointScript startPoint;
+
     //lockedOnPlayer means that there is a 'puppet' being controled by this class
     private bool lockedOnPlayer = false;
     private bool hasNormalColor = true;
     private float cooldownTimer;
-    private bool cd=false;
     private float maxCooldownTime = 3;
     
 
@@ -21,8 +26,9 @@ public class PlayerController : MonoBehaviour {
         if (player != null) {
             p = (PlayerScript)player.GetComponent(typeof(PlayerScript));
             lockedOnPlayer = true;
-        }  
-        
+        }
+        setStartPoint();
+
     }
 	
 	// Update is called once per frame
@@ -31,26 +37,24 @@ public class PlayerController : MonoBehaviour {
             //must be in this order so that it will always be normal.
             //will need to modify this code later
             lockedOnPlayer = false;
-            if (!hasNormalColor)
-            {
-                cd = true;
-               //will use flipcolor() later
-            }
-            if (cd)
-            {
-                cooldownTimer += Time.deltaTime;
-            }
+            findAndReattach();
+            
+            //for cooldown
+            cooldownTimer += Time.deltaTime;
+            
             if (cooldownTimer > maxCooldownTime)
             {
-                flipColor();
+                if (!hasNormalColor)
+                {
+                    flipColor();
+                }
                 cooldownTimer = 0;
-                cd = false;
+                startPoint.respawn();
             }
-           
+
         }
-        else if(player!=null)
+        else
         {
-            p = (PlayerScript)player.GetComponent(typeof(PlayerScript));
             lockedOnPlayer = true;
         }
 
@@ -64,7 +68,22 @@ public class PlayerController : MonoBehaviour {
         }
         
     }
+    //find the respawned player and attach the control to it.
+    private void findAndReattach()
+    {
+        player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            p = (PlayerScript)player.GetComponent(typeof(PlayerScript));
+        }
 
+    }
+
+    private void setStartPoint()
+    {
+        start = GameObject.FindGameObjectWithTag("StartPoint");
+        startPoint = (StartpointScript)start.GetComponent(typeof(StartpointScript));
+    }
 
     //flip color of the whole thing can also detect whether player still active
     private void flipColor() { 

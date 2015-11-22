@@ -19,16 +19,12 @@ public class HealBall : MonoBehaviour {
         if (coll.gameObject.tag.Equals("Player"))
         {
             pS = (PlayerScript)coll.gameObject.GetComponent(typeof(PlayerScript));
-            pS.damage(healPoints);
-         //   if (!pS.hasMaxHealth())
-            //temp for testing
-            if(false)
+            if (!pS.hasMaxHealth())
             {
                 pS.heal(healPoints);
                 Destroy(gameObject);
             }
-            //need to del this part once bug test is over
-            Destroy(gameObject);
+           
         }
     }
 }

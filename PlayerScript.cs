@@ -7,22 +7,28 @@ public class PlayerScript : HumanoidScript {
     GameObject healthbar;
     Image healthbarVisual;
     RectTransform healthbarRect;
+
     //sprite component from player;
     Color playerBaseColor;
     SpriteRenderer playerSprite;
+
    //various values
     private int initHealth = 100;
     private float barLength;
     private float minXvalue;
+
     //private float maxXvalue;
     private float yStorage;
+
     //use after getting hit
     private bool cd = false;
     private float cooldownTimer = 0;
     private float cooldownMaxTime = 0.5f;
+
     //use for flickering
     private bool isBright = true;
     private bool isBlack = true;
+
 	// Use this for initialization
 	new void Start () {
         base.Start();
@@ -32,6 +38,7 @@ public class PlayerScript : HumanoidScript {
         playerBaseColor = new Color(0, 0, 0, 255);
         playerSprite = getSprite();
         setIniVal();
+       
     }
 
     private void setIniVal()
@@ -41,9 +48,11 @@ public class PlayerScript : HumanoidScript {
         yStorage = healthbarRect.localPosition.y;
         setHealth(initHealth);
         setHealthBar(initHealth);
+
         //makes sure that always start bright red
         isBright = false;
         flipHealthbarColor();
+
     }
 
     private void setHealthBar(int h)
@@ -123,6 +132,7 @@ public class PlayerScript : HumanoidScript {
         base.heal(h);
         setHealthBar(getHealth());
     }
+
 
     
 

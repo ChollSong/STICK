@@ -14,7 +14,6 @@ public class HumanoidScript : MonoBehaviour
     index 3 for gravity change and jumping at different pitch;
     */
     public AudioClip[] soundClip;
-    public int amountOfClips;
     //constants
     int speed = 8;
     int jumpForce = 700;
@@ -53,14 +52,14 @@ public class HumanoidScript : MonoBehaviour
     //set audiosources;
     private void setAudioSources()
     {
-        soundMakers = new AudioSource[amountOfClips];
+        soundMakers = new AudioSource[soundClip.Length];
         for(int i = 0; i < soundMakers.Length; i++)
         {
             soundMakers[i] = gameObject.AddComponent<AudioSource>();
             soundMakers[i].clip = soundClip[i];
         }
 
-        soundMakers[3].volume = 0.4f;
+      
     }
     
     // do movements according to logic
@@ -91,12 +90,14 @@ public class HumanoidScript : MonoBehaviour
         }
 
     }
+
     //animate the movement
     private void setAnimate() {
         anime.SetFloat("vSpeed", body.velocity.y * rotationState);
         anime.SetBool("runState", (goingRight || goingLeft) && grounded);
         anime.SetBool("grounded", grounded);
     }
+
     //checks if the death condition has been reached
     private void checkDeath()
     {
@@ -107,6 +108,7 @@ public class HumanoidScript : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     //check if has has max health
     public bool hasMaxHealth()
     {
@@ -119,16 +121,19 @@ public class HumanoidScript : MonoBehaviour
             return false;
         }
     }
+
     //get current health
     public int getHealth()
     {
         return health;
     }
+
     //sets health
     public void setHealth(int h)
     {
         health = h;
     }
+
     //decrease hp by d points;
     public void damage(int d)
     {
@@ -136,6 +141,7 @@ public class HumanoidScript : MonoBehaviour
         health -= d;
 
     }
+
     //restore hp by x points
     public void heal(int x) {
         soundMakers[1].Play();
@@ -155,35 +161,40 @@ public class HumanoidScript : MonoBehaviour
         {
             body.AddForce(Vector2.up * jumpForce*rotationState);
             soundMakers[3].pitch = 2f;
-            soundMakers[3].volume = 0.5f;
+            soundMakers[3].volume = 0.2f;
             soundMakers[3].Play();
 
         }
     }
+
     //set bool logic for going right
     public void goRight()
     {
         goingRight = true;
         facingRight = true;
     }
+
     //set bool logic for going left
     public void goLeft()
     {
         goingLeft = true;
         facingRight = false;
     }
+
     //stop left and right movement
     public void stop()
     {
         goingRight = false;
         goingLeft = false;
     }
+
     //spawning bullets
     public void shoot() {
         soundMakers[0].Play();
         Instantiate(Resources.Load("Pre-fab/flash"),gun.position,transform.rotation);
         Instantiate(Resources.Load("Pre-fab/bullet"), gun.position, transform.rotation);
     }
+
     //flip upside down
     public void flip() {
         //rotation stuff
@@ -213,6 +224,7 @@ public class HumanoidScript : MonoBehaviour
            
         }
     }
+
     //send spritecomponent of the player
     public SpriteRenderer getSprite()
     {
