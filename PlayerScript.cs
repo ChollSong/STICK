@@ -68,9 +68,9 @@ public class PlayerScript : HumanoidScript {
             isBright = true;
         }
     }
-
+    //flip color and play sound
     public void flipPlayerColor()
-    {
+    {   
         if (isBlack)
         {
             playerBaseColor = new Color(255, 255, 255, 255);
@@ -81,6 +81,10 @@ public class PlayerScript : HumanoidScript {
             playerBaseColor = new Color(0, 0, 0, 255);
             isBlack = true;
         }
+
+        soundMakers[3].pitch = 0.7f;
+        soundMakers[3].volume = 0.3f;
+        soundMakers[3].Play();
 
         playerSprite.color = playerBaseColor;
     }

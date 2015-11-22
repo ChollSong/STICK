@@ -20,7 +20,7 @@ public class HealBall : MonoBehaviour {
         {
             pS = (PlayerScript)coll.gameObject.GetComponent(typeof(PlayerScript));
             pS.damage(healPoints);
-            //if (!pS.hasMaxHealth())
+         //   if (!pS.hasMaxHealth())
             //temp for testing
             if(false)
             {

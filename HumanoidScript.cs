@@ -7,16 +7,27 @@ public class HumanoidScript : MonoBehaviour
     public Transform groundCheck;
     public LayerMask whatIsGround;
     public Transform gun;
-
+    /*
+    index 0 for gun
+    index 1 for health
+    index 2 for damange
+    index 3 for gravity change and jumping at different pitch;
+    */
+    public AudioClip[] soundClip;
+    public int amountOfClips;
+    //constants
     int speed = 8;
     int jumpForce = 700;
     private int health=1;
     float groundRadius = 0.5f;
     int gravityVal = 3;
+    //various subparts
     Rigidbody2D body;
     Animator anime;
     SpriteRenderer sprite;
-
+    //child class can access
+    protected AudioSource[] soundMakers;
+    //logic for movements
     bool goingRight = false;
     bool goingLeft = false;
     bool facingRight = true;
@@ -28,6 +39,7 @@ public class HumanoidScript : MonoBehaviour
         body = GetComponent<Rigidbody2D>();
         anime = GetComponent<Animator>();
         sprite = GetComponent<SpriteRenderer>();
+        setAudioSources();    
         body.gravityScale = gravityVal;
     }
 
@@ -37,6 +49,18 @@ public class HumanoidScript : MonoBehaviour
         setAnimate();
         checkDeath();
         
+    }
+    //set audiosources;
+    private void setAudioSources()
+    {
+        soundMakers = new AudioSource[amountOfClips];
+        for(int i = 0; i < soundMakers.Length; i++)
+        {
+            soundMakers[i] = gameObject.AddComponent<AudioSource>();
+            soundMakers[i].clip = soundClip[i];
+        }
+
+        soundMakers[3].volume = 0.4f;
     }
     
     // do movements according to logic
@@ -108,11 +132,13 @@ public class HumanoidScript : MonoBehaviour
     //decrease hp by d points;
     public void damage(int d)
     {
+        soundMakers[2].Play();
         health -= d;
 
     }
     //restore hp by x points
     public void heal(int x) {
+        soundMakers[1].Play();
         if ((x + health) > 100)
         {
             health = 100;
@@ -128,6 +154,9 @@ public class HumanoidScript : MonoBehaviour
         if (grounded)
         {
             body.AddForce(Vector2.up * jumpForce*rotationState);
+            soundMakers[3].pitch = 2f;
+            soundMakers[3].volume = 0.5f;
+            soundMakers[3].Play();
 
         }
     }
@@ -151,12 +180,13 @@ public class HumanoidScript : MonoBehaviour
     }
     //spawning bullets
     public void shoot() {
+        soundMakers[0].Play();
         Instantiate(Resources.Load("Pre-fab/flash"),gun.position,transform.rotation);
         Instantiate(Resources.Load("Pre-fab/bullet"), gun.position, transform.rotation);
     }
     //flip upside down
     public void flip() {
-
+        //rotation stuff
         if (rotationState == (int)Orientation.NORMALSIDE) {
             rotationState = (int)Orientation.UPSIDEDOWN;
             if (facingRight) {
