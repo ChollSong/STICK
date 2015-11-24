@@ -231,6 +231,15 @@ public class HumanoidScript : MonoBehaviour
         return sprite;
     }
 
+    public void setSpeed(int s)
+    {
+        speed = s;
+    }
+
+    public Animator getAnimator()
+    {
+        return anime;
+    }
    
 
     enum Orientation: int {

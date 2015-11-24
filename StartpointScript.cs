@@ -6,10 +6,14 @@ public class StartpointScript : MonoBehaviour {
 
     private int lifeLeft = 3;
     private Text lifeCounter;
-
+    private float gameoverMaxTime = 3;
+    private float gameoverTimer = 0;
+    private bool gameoverStarting = false;
+    
     // Use this for initialization
     void Start()
     {
+        lifeLeft = 3;
         lifeCounter = GameObject.Find("LifeCounter").GetComponent<Text>();
         spawn();
     }
@@ -17,11 +21,20 @@ public class StartpointScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
+        if (gameoverStarting)
+        {
+            gameoverTimer += Time.deltaTime;
+        }
+        if (gameoverMaxTime < gameoverTimer)
+        {
+            Application.LoadLevel("main_menu");
+        }
 
     }
     //exit back to main menu after displaying game over.
     private void gameOver()
     {
+        gameoverStarting = true;
 
     }
 

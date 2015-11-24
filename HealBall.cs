@@ -3,7 +3,7 @@ using System.Collections;
 
 public class HealBall : MonoBehaviour {
     private PlayerScript pS;
-    private int healPoints = 10;
+    private int healPoints = 20;
 	// Use this for initialization
 	void Start () {
 	

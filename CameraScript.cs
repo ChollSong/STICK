@@ -69,7 +69,7 @@ public class CameraScript : MonoBehaviour {
 
     private void playRandom()
     {
-        int i= Random.Range(0,3);
+        int i = (int)Random.Range(0.0f, jukebox.Length-1.01f);
         jukebox[i].Play();
         musicPlaying = true;
     }

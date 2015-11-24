@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour {
 //        detectShake();
         
 	}
-
+    //might remove this part later
     private void detectShake() {
         if (Input.acceleration.magnitude>14f) {
             p.flip();
