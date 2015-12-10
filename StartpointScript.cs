@@ -31,7 +31,7 @@ public class StartpointScript : MonoBehaviour {
         }
 
     }
-    //exit back to main menu after displaying game over.
+    
     private void gameOver()
     {
         gameoverStarting = true;

@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour {
             p = (PlayerScript)player.GetComponent(typeof(PlayerScript));
             lockedOnPlayer = true;
         }
+        //sets startpoint
         setStartPoint();
 
     }
@@ -63,9 +64,7 @@ public class PlayerController : MonoBehaviour {
 	}
     //might remove this part later
     private void detectShake() {
-        if (Input.acceleration.magnitude>14f) {
-            p.flip();
-        }
+      //doesn't work very well with gameplay
         
     }
     //find the respawned player and attach the control to it.
